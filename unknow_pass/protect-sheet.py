@@ -7,9 +7,11 @@ files = archive.namelist()
 archive.close()
 archive = zipfile.ZipFile(path, mode='w')
 for file in files:
-    if file.startswith('xl/worksheets/sheet'):
+    if file in recovery:
         xmlStr = open('tmp/' + file, 'r', encoding='utf-8').read()
-        xmlStr = xmlStr.replace("<sheetData/>","<sheetData/>" + recovery[file])
+        xmlStr = xmlStr.replace('<sheetData/>','<sheetData/>' + recovery[file])
+        xmlStr = xmlStr.replace('</sheetData>','</sheetData>' + recovery[file])
+        xmlStr = xmlStr.replace("<bookViews>", recovery[file] + "<bookViews>")
         open('tmp/' + file, 'w', encoding='utf-8').write(xmlStr)
     archive.write('tmp/' + file, file)
 archive.close()
