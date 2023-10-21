@@ -13,8 +13,8 @@ for file in files:
         protection = "".join(re.findall(r'<sheetProtection[^>]*?/>', xmlStr))
         recovery[file] = protection
         open('tmp/' + file, 'w', encoding='utf-8').write(xmlStr.replace(protection, ''))
-        json.dump(recovery, open('recovery.json', 'w', encoding='utf-8'), indent=4)
     archive.write('tmp/' + file, file)
+json.dump(recovery, open('recovery.json', 'w', encoding='utf-8'), indent=4)
 archive.close()
 # shutil.rmtree('tmp', ignore_errors=True)
         
