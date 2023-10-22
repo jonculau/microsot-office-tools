@@ -9,9 +9,7 @@ archive = zipfile.ZipFile(path, mode='w')
 for file in files:
     if file in recovery:
         xmlStr = open('tmp/' + file, 'r', encoding='utf-8').read()
-        xmlStr = xmlStr.replace('<sheetData/>','<sheetData/>' + recovery[file])
-        xmlStr = xmlStr.replace('</sheetData>','</sheetData>' + recovery[file])
-        xmlStr = xmlStr.replace("<bookViews>", recovery[file] + "<bookViews>")
+        xmlStr = xmlStr.replace(recovery[file]['replace'], recovery[file]['tag'] + recovery[file]['replace'])
         open('tmp/' + file, 'w', encoding='utf-8').write(xmlStr)
     archive.write('tmp/' + file, file)
 archive.close()
